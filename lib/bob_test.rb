@@ -9,15 +9,16 @@ module BobTest
     
     def start_test(name = Time.now.to_s)
       @test = BobTest.new
-      @test.name = name
       @test.start_line = Readline::HISTORY.size - 1
+      @test.name = name      
     end
     
     # todo figure out why there's an off by 1 error.  Would expect size - 1 to be the last command.  
     def end_test
       @test.end_line = Readline::HISTORY.size - 3
       @test.get_lines(@test.start_line..@test.end_line)
-      path_to_file = File.expand_path(File.dirname(__FILE__)) + "/../bob/test/unit/"
+      # TODO figure out how to find path to rails project.
+      path_to_file = File.expand_path(File.dirname(__FILE__)) + "/../test/unit/bob/"      
       File.makedirs(path_to_file)
       filename ="#{self.class_name.underscore}_bob_test.rb"
       filename_with_path =  path_to_file + filename

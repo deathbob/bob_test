@@ -1,1 +1,3 @@
 HIYO!
+
+require 'bob_test'
