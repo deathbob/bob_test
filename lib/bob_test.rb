@@ -18,11 +18,16 @@ module BobTest
       @test.end_line = Readline::HISTORY.size - 3
       @test.get_lines(@test.start_line..@test.end_line)
       # TODO figure out how to find path to rails project.
-      path_to_file = File.expand_path(File.dirname(__FILE__)) + "/../test/unit/bob/"      
+#      path_to_file = File.expand_path(File.dirname(__FILE__)) + "../test/unit/bob/"
+      path_to_file = "#{RAILS_ROOT}/test/unit/bob/"
+      # add require test helper to generated file
+      # check if we're in rails and if so put the tests in the test folder
+      # else put them in pwd.
       File.makedirs(path_to_file)
       filename ="#{self.class_name.underscore}_bob_test.rb"
       filename_with_path =  path_to_file + filename
       File.open(filename_with_path, 'w+') do |f|
+        f.write("require 'test_helper'\n")
         f.write("class #{self.class_name}BobTest < Bt\nend\n")
       end unless File.exists?(filename_with_path)
       @test.write_to_file(filename_with_path)
